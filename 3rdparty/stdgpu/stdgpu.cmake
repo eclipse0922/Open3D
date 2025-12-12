@@ -7,8 +7,9 @@ include(ExternalProject)
 ExternalProject_Add(
     ext_stdgpu
     PREFIX stdgpu
-    URL https://github.com/stotko/stdgpu/archive/2588168d226bd17229dbf58d821549580791089d.tar.gz
-    URL_HASH SHA256=86e50789bbe21c57f64358c6acbd4481d56c1e45ce9ba1fb5c5c8482c3973215
+    # Updated to latest master for CUDA 13 support (cccl/thrust path fix)
+    URL https://github.com/stotko/stdgpu/archive/133f9e20dfe36d6dded5be31b9b54e2418891833.tar.gz
+    URL_HASH SHA256=4416f80f9bb6c18594c11123f63e796661a3f93029c195f2d2ac1a6464c92caa
     DOWNLOAD_DIR "${OPEN3D_THIRD_PARTY_DOWNLOAD_DIR}/stdgpu"
     UPDATE_COMMAND ""
     CMAKE_ARGS
@@ -19,7 +20,7 @@ ExternalProject_Add(
         -DSTDGPU_BUILD_TESTS=OFF
         -DSTDGPU_BUILD_BENCHMARKS=OFF
         -DSTDGPU_ENABLE_CONTRACT_CHECKS=OFF
-        -DTHRUST_INCLUDE_DIR=${CUDAToolkit_INCLUDE_DIRS}
+        # Removed THRUST_INCLUDE_DIR - let stdgpu auto-detect for CUDA 13+ cccl path support
         ${ExternalProject_CMAKE_ARGS_hidden}
     CMAKE_CACHE_ARGS    # Lists must be passed via CMAKE_CACHE_ARGS
         -DCMAKE_CUDA_ARCHITECTURES:STRING=${CMAKE_CUDA_ARCHITECTURES}
